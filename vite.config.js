@@ -3,13 +3,14 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/ansh-portfolio/',
   plugins: [react()],
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          'framer-motion': ['framer-motion'],
-          'react-vendor': ['react', 'react-dom'],
+        manualChunks: (id) => {
+          if (id.includes('framer-motion')) return 'framer-motion';
+          if (id.includes('react') || id.includes('react-dom')) return 'react-vendor';
         },
       },
     },
